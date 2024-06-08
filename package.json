@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@google-cloud/aiplatform": "^3.23.0",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
+    "route": "^0.2.5",
+    "zod": "^3.23.8"
+  }
+}
