@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
@@ -18,7 +17,7 @@ const LandingPage = () => {
       }
     };
   return (
-    <div className="flex  flex-1 p-5 h-screen">
+    <div className="flex  flex-1 p-5 h-screen bg-slate-900 text-black">
       <div className=" w-full  ">
         <img
           src={
@@ -28,14 +27,16 @@ const LandingPage = () => {
           className="w-full h-full object-cover rounded-2xl"
         />
       </div>
-      <div className="h-full w-full ">
-        <h1 className="text-3xl m-20 text-center font-custom">Welcome to Careertio</h1>
-        <p className="text-xl m-20 text-center text-gray-950 font-custom">
+      <div className="h-full w-full g-2 ">
+        <div className="p-4 mx-2 bg-white rounded-3xl">
+        <h1 className="text-3xl m-20 text-center font-custom font-bold ">WELCOME TO CAREETIO</h1>
+        <p className="text-xl m-20 text-center  font-custom">
           Embarking on the journey to discover the perfect career path is a
           profound exploration, one that requires guidance, insight, and
           resources.
         </p>
-        <div className="mt-[30%] w-[50%] bg-slate-950 mx-auto rounded-3xl ">
+        </div>
+        <div className="mt-4 w-[50%] bg-slate-950 mx-auto rounded-3xl ">
           <input
             type="range"
             min="0"

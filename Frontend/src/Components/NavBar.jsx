@@ -1,14 +1,15 @@
-import React from 'react'
+
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-const NavBar = () => {
+import {Button} from "./Button"
+import { Heading } from "./Heading";
+const NavBar = ({isSignedIn}) => {
     const [showDropdown, setShowDropdown] = useState(false);
 
     const toggleDropdown = () => {
       setShowDropdown(!showDropdown);
     };
   return (
-    <nav className="bg-white fixed w-full left-0  h-32 py-2 mt-0 sm:h-24  m-0  shadow-transparent shadow-md ">
+    <nav className="bg-slate-900  w-full left-0  h-32 py-2 mt-0 sm:h-24  m-2  shadow-transparent shadow-md ">
       <div className="container left-0 mx-auto flex justify-between items-center m-0 pl-0">
         <div className="flex  justify-start items-center ml-4">
           <img
@@ -39,40 +40,25 @@ const NavBar = () => {
             </svg>
           </button>
         </div>
+        <div className="ml-16 pl-5">
+          <Heading label="Careetio" color="white" />
+        </div>
         <div className={`md:flex ${showDropdown ? "block" : "hidden"}`}>
           <div className="flex-1 flex justify-center m-3">
-            <NavLink
-              to={`/`}
-              className="text-gray-800  hover:text-cyan-400 hover:font-extrabold text-s px-3 font-san  font-bold text-md py-2 rounded-md sm:text-l "
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to={`/`}
-              className="text-gray-800 hover:text-cyan-400 hover:font-extrabold text-s px-3 font-san  font-bold text-md py-2 rounded-md sm:text-l "
-            >
-              About Us
-            </NavLink>
-            <NavLink
-              to={`/`}
-              className="text-gray-800 hover:text-cyan-400 hover:font-extrabold text-s px-3 font-san  font-bold text-md py-2 rounded-md sm:text-l "
-            >
-              Know More
-            </NavLink>
+            <Button label="Home" onClick={"/"}/>
+            <Button label="About" onClick={"/"}/>
           </div>
-          <div className="flex items-center pr-12">
-            <NavLink to={`/SignUp`}>
-              <button className="bg-cyan-200 text-black h-14 w-28 px-3 rounded-3xl hover:font-extrabold font-bold text-md hover:h-16 hover:w-48  ml-4 font-montserrat text-s sm:text-l ">
-                Sign Up
-              </button>
-            </NavLink>
-
-            <NavLink to={`/Login`}>
-              <button className="bg-cyan-500 text-black h-14 w-28 px-3 rounded-3xl hover:font-extrabold font-bold text-md hover:h-16 hover:w-48  ml-4 font-montserrat text-s sm:text-l ">
-                Login
-              </button>
-            </NavLink>
-          </div>
+          {
+            isSignedIn?
+            <div className="flex-1 flex justify-center m-3">
+              <Button label="Sign out" onClick={"/signin"}/>
+            </div>
+            :
+            <div className="flex-1 flex justify-center m-3">
+              <Button label="Sign in" onClick={"/signin"}/>
+              <Button label="Sign up" onClick={"/signup"}/>
+            </div>
+          }
         </div>
       </div>
     </nav>
