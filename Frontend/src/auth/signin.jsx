@@ -13,10 +13,10 @@ export const Signin = () => {
   const navigate= useNavigate()
 
   return (
-    <div className="bg-slate-300 h-screen flex justify-center">
-      <div className="flex flex-col justify-center">
-        <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
-          <Heading label={"Sign in"} />
+    <div className="bg-gray-900 h-screen flex justify-center">
+      <div className="flex flex-col justify-center text-white">
+        <div className="rounded-lg bg-gray-800 w-80 text-center p-2 h-max px-10">
+          <Heading label={"Sign in"} color={"white"} />
           <SubHeading label={"Enter your credentials to access your account"} />
           <InputBox
             placeholder={"harsha@batman.com"}
@@ -36,13 +36,16 @@ export const Signin = () => {
             <Button
               label={"Sign in"}
               onClick={async () => {
-                const response=await axios.get("http://localhost:3000/api/v1/user/signin",
-                  {
-                    email: email,
-                    password: password,
-                  });
-                localStorage.setItem("token", response.data.token);
-                navigate("/categories");
+                if(email && password){
+                  const response=await axios.get("http://localhost:3000/api/v1/user/signin",
+                    {
+                      email: email,
+                      password: password,
+                    });
+                  const name= response.firstName;
+                  localStorage.setItem("token", response.data.token);
+                  navigate("/home",{ state: { isSignedIn: true,email,name } });
+                }
               }}
             />
           </div>

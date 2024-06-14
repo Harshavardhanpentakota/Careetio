@@ -1,15 +1,21 @@
 const express = require("express");
 const courseRouter= express.Router();
-const {Course}=require("../db");
+const {Courses}=require("../db");
+console.log("Third")
 
-courseRouter.get("/courses",async (req,res) => {
+courseRouter.get("/",async (req,res) => {
     try{
         const category=req.query.cat;
-        const courses= await Course.find({category:category});
-        res.json(courses);
+        const courses= await Courses.find({category:category});
+        res.json({
+            courses:courses
+        });
     }
     catch{
-        res.send("Courses cannot be fetched");
+        res.status(504).json({
+            success: false,
+            msg: "Courses cannot be fetched"
+        });
     }
 })
 

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const {DB_URL} = require("./config")
 
 mongoose.connect(DB_URL);
+console.log("Connection Successfull")
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -71,6 +72,6 @@ const CourseSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 const Account = mongoose.model("Account", accountSchema);
 const CompletedCoursesCount = mongoose.model("CompletedCoursesCount", completedCoursesCountSchema);
-const Course = mongoose.model("Course", CourseSchema);
+const Courses = mongoose.model("Courses", CourseSchema);
 
-module.exports = {User, Account, CompletedCoursesCount, Course}
+module.exports = {User, Account, CompletedCoursesCount, Courses}
