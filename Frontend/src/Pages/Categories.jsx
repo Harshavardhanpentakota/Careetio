@@ -4,7 +4,6 @@ import {CourseButton} from "../Components/CourseButton"
 import axios from "axios"
 import { useLocation } from "react-router"
 // import { useNavigate } from "react-router"
-import {SearchBar} from "../Components/SearchBar"
 import PropTypes from 'prop-types';
 import { useEffect, useState } from "react"
 
