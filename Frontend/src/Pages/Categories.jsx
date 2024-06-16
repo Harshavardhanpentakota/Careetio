@@ -5,7 +5,8 @@ import axios from "axios"
 import { useLocation } from "react-router"
 import {Sidebar} from "../Components/Sidebar"
 import PropTypes from 'prop-types';
-import { useEffect, useState } from "react"
+import { useEffect,  useState } from "react"
+import {SearchBar} from "../Components/SearchBar"
 
 const Categories = ({category}) => {
     console.log(category);
@@ -15,7 +16,8 @@ const Categories = ({category}) => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [sideBar,setSideBar] = useState(false);
-    const [courseId,setCourseId] = useState(null);
+    const [courseName,setCourseName] = useState(null);
+    const [search, setSearch] = useState(false)
     useEffect(() => {
         const fetchCourses = async () => {
             try{
@@ -31,6 +33,7 @@ const Categories = ({category}) => {
         }
         fetchCourses();
     },[category]);
+
     if(loading){
         return <>
         <div className="flex justify-center items-center h-screen bg-gray-900">
@@ -57,12 +60,13 @@ const Categories = ({category}) => {
         <Heading label={"Information Technology"} className="text-black" />
         <p className="mb-3 text-sm pt-5 text-center mx-64 font-normal text-black ">Information technology (IT) is the backbone of modern society, encompassing a vast array of technologies and systems that facilitate the storage, retrieval, transmission, and manipulation of data. From the rise of the internet to the advent of cloud computing and artificial intelligence, IT has revolutionized how businesses operate, how individuals communicate, and how information is accessed and shared globally. In the realm of business, IT has become integral to operations, with companies relying on enterprise resource planning (ERP) systems, customer relationship management (CRM) software, and data analytics tools to streamline processes, improve efficiency, and gain insights into market trends and consumer behavior.The internet has connected people and businesses across the globe, enabling instant communication, collaboration, and access to a wealth of information. Social media platforms, e-commerce websites, and online marketplaces have transformed how goods and services are bought and sold, while search engines and online databases provide instant access to knowledge on virtually any topic.</p>
         </div>
+        <SearchBar courseName={courseName} search={search} setSearch={setSearch} category={category} sideBar={sideBar} setSideBar={setSideBar} />
         <div>
         {
             courses?(
                 courses.map((course) => {
                     return <CourseButton key={course.id} id={course.name} label={course.name} onClick={() => {
-                        setCourseId(course._id);
+                        setCourseName(course.name);
                         setSideBar(!sideBar);
                     }} />
                 })
@@ -74,7 +78,7 @@ const Categories = ({category}) => {
         <>  
         {
             sideBar && (
-                <Sidebar courseId={courseId} />
+                <Sidebar courseId={courseName} category={category} sidebar={sideBar} setSideBar={setSideBar} />
             )
         }
         </>

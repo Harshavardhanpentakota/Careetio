@@ -69,9 +69,26 @@ const CourseSchema = new mongoose.Schema({
     }
 });
 
+const CourseContentSchema = new mongoose.Schema({
+    _id: {
+        type: String,
+        ref: "Course",
+        required: true
+    },
+    Content: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    }
+});
+
 const User = mongoose.model("User", userSchema);
 const Account = mongoose.model("Account", accountSchema);
 const CompletedCoursesCount = mongoose.model("CompletedCoursesCount", completedCoursesCountSchema);
 const Courses = mongoose.model("Courses", CourseSchema);
+const CourseContent=mongoose.model("CourseContent", CourseContentSchema);
 
-module.exports = {User, Account, CompletedCoursesCount, Courses}
+module.exports = {User, Account, CompletedCoursesCount, Courses, CourseContent};

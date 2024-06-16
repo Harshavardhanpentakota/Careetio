@@ -2,6 +2,7 @@
 import {Button} from "./Button"
 import { Heading } from "./Heading";
 import { useNavigate } from "react-router";
+import PropTypes from "prop-types";
 
 const NavBar = ({isSignedIn}) => {
   const navigate=useNavigate();
@@ -40,5 +41,10 @@ const NavBar = ({isSignedIn}) => {
     </nav>
   );
 }
+
+NavBar.propTypes = {
+  isSignedIn: PropTypes.bool.isRequired
+}
+
 
 export default NavBar
