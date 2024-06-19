@@ -24,10 +24,10 @@ courseRouter.get("/",async (req,res) => {
 courseRouter.get("/description",async(req,res) => {
     try{
         const category=req.query.cat;
-        const courseId=req.query.id;
-        const description=await CourseContent.find({category:category,_id:courseId});
+        const courseName=req.query.name;
+        const courseContent=await CourseContent.find({category:category,title:courseName});
         res.json({
-            description:description
+            content:courseContent
         });
     }
     catch{

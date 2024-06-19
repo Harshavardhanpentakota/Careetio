@@ -13,7 +13,7 @@ export const CourseButton = ({label, onClick}) => {
 
 CourseButton.propTypes = {
   label: PropTypes.string.isRequired,
-  onClick: PropTypes.string.isRequired
+  onClick: PropTypes.func.isRequired
 };
 
 

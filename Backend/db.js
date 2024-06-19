@@ -69,20 +69,44 @@ const CourseSchema = new mongoose.Schema({
     }
 });
 
+// const CourseContentSchema = new mongoose.Schema({
+//     _id: {
+//         type: String,
+//         ref: "Course",
+//         required: true
+//     },
+//     Content: {
+//         type: String,
+//         required: true
+//     },
+//     category: {
+//         type: String,
+//         required: true
+//     }
+// });
+
+const resourceSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    url: { type: String, required: true }
+});
+const topicSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    resources: [resourceSchema] 
+});
+const sectionSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    topics: [topicSchema]
+});
 const CourseContentSchema = new mongoose.Schema({
     _id: {
         type: String,
         ref: "Course",
         required: true
     },
-    Content: {
-        type: String,
-        required: true
-    },
-    category: {
-        type: String,
-        required: true
-    }
+    category: { type: String, required: true },
+    title: { type: String, required: true },
+    sections: [sectionSchema]
 });
 
 const User = mongoose.model("User", userSchema);
