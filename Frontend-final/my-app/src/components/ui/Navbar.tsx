@@ -14,24 +14,36 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
   import { Button } from "@/components/ui/button"
-   
-const Navbar = () => {
-    const isSignedIn = useAuth();
+  import SparklesText from '../magicui/sparkles-text';
+
+const Navbar = ({genAi}:{genAi:boolean}) => {
+    const {isSignedIn} = useAuth();
   return (
-    <div className="border-b">
+    <div className="border-b relative py-3">
       <div className="h-14 container flex justify-between items-center">
         <div className="flex gap-6 items-center">
-          <p className="font-bold text-base">Careetio</p>
-          <div className="hidden md:!flex items-center gap-6 text-sm font-medium">
-            <a href={"/home"} className="transition-colors hover:text-foreground/80 text-foreground/60">Home</a>
-            <a href={"/profile"} className="transition-colors hover:text-foreground/80 text-foreground/60">Profile</a>
-          </div>
+          <p className="text-3xl font-bold font-montserrat">Careetio</p>
+         {
+          !genAi ? (
+            <Button variant="outline" className='shadow-md' >
+            <a href="/generate-ai">
+            <SparklesText className='text-md' sparklesCount={4} text='Generate with AI' />
+            </a>
+          </Button>
+          ):(
+            <Button variant="link" className='text-md mt-2' >
+            <a href="/home">
+            Home
+            </a>
+          </Button>
+          )
+         }
         </div>
         <div className="flex items-center gap-4">
           <ModeToggle />
           {!isSignedIn ? (
-            <Button>
-              <a href={"/signin"}>Sign in</a>
+            <Button  asChild>
+              <a href="/signin"  >Sign in</a>
             </Button>
           ) : (
             <>

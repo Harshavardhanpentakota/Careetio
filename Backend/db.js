@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const {DB_URL} = require("./config")
+const {DB_URL} = require("./config");
+const { string } = require("zod");
 
 mongoose.connect(DB_URL);
 console.log("Connection Successfull")
@@ -27,20 +28,30 @@ const userSchema = new mongoose.Schema({
 
 const accountSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",    
+        type: String,
         required:true
     },
-    completedCourses:[ {
-        CourseCategory: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Courses",
+    firstName: {
+        type:String,
+        required:true
+    },
+    enrolledCourses:[ {
+        CourseName: {
+            type: String,
+            unique:true
         },
-        DateCompleted:{
-            type:Date,
-            default:Date.now
+        progress: {
+            type: Boolean,
+            default: false
         }
     }],
+    bookmarkedCourse:[{
+        CourseName: {
+            type: String,
+            unique:true
+        },
+    }],
+
 })
 
 const completedCoursesCountSchema = new mongoose.Schema({
@@ -63,27 +74,7 @@ const CourseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: String,
-        required: true
-    }
 });
-
-// const CourseContentSchema = new mongoose.Schema({
-//     _id: {
-//         type: String,
-//         ref: "Course",
-//         required: true
-//     },
-//     Content: {
-//         type: String,
-//         required: true
-//     },
-//     category: {
-//         type: String,
-//         required: true
-//     }
-// });
 
 const resourceSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -104,7 +95,6 @@ const CourseContentSchema = new mongoose.Schema({
         ref: "Course",
         required: true
     },
-    category: { type: String, required: true },
     title: { type: String, required: true },
     sections: [sectionSchema]
 });

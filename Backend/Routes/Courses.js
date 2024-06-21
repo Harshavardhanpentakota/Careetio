@@ -1,14 +1,13 @@
 const express = require("express");
 const courseRouter= express.Router();
-const {Courses}=require("../db");
-const {CourseContent}=require("../db");
-const {generateResult}=require("../GenAi/playground");
+const { Courses } = require("../db");
+const { CourseContent } = require("../db");
+const { generateResult } = require("../GenAi/playground");
 console.log("Third")
 
 courseRouter.get("/",async (req,res) => {
     try{
-        const category=req.query.cat;
-        const courses= await Courses.find({category:category});
+        const courses= await Courses.find();
         res.json({
             courses:courses
         });
@@ -23,9 +22,8 @@ courseRouter.get("/",async (req,res) => {
 
 courseRouter.get("/description",async(req,res) => {
     try{
-        const category=req.query.cat;
         const courseName=req.query.name;
-        const courseContent=await CourseContent.find({category:category,title:courseName});
+        const courseContent=await CourseContent.find({title:courseName});
         res.json({
             content:courseContent
         });
@@ -54,6 +52,6 @@ courseRouter.get("/description/generate",async (req,res) => {
     }
 })
 
-module.exports={courseRouter}
+module.exports = {courseRouter};
 
 

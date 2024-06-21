@@ -4,7 +4,7 @@ import React from 'react'
 
 const SignUpPage = () => {
   return (
-    <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+    <div className="h-[calc(100vh-56px)] flex items-center justify-center"  >
     <SignUp />
   </div>
   )

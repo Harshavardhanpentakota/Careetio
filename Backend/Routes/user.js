@@ -5,7 +5,6 @@ const {User,Account} = require("../db");
 const jwt =require("jsonwebtoken");
 const {JWT_SECRET} =require("../config");
 const {authMiddleware} = require("../middleware/auth");
-const {Course} = require("../db")
 
 const userSchema = zod.object ({
     email: zod.string(),
@@ -76,24 +75,6 @@ userRouter.post("/signup",async (req,res) => {
             msg:"Failed to Signup"
         })
     }
-
-    userRouter.get("/categories",authMiddleware, async (req,res) => {
-        const filter = req.query.filter || "";
-        const categories= await Course.findOne({
-            name:{
-                $regex:filter
-            }
-        })
-        if(categories.length===0){
-            res.json({})
-        }
-        res.json({
-            courses: categories.map((course) =>({
-                _id:course._id,
-                name:course.name
-            }) )
-        })
-    })
 })
 
 

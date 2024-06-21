@@ -81,8 +81,8 @@ function LandingPage() {
         <div className=" mt-3 px-3 flex items-center justify-between w-full top-0 ">
           <h1 className="text-3xl font-bold font-montserrat ">Careetio</h1>
           <div id="Left side">
-            <Button variant="link" asChild>
-              <a href="/signin">Sign in</a>
+            <Button variant="link" asChild  >
+              <a href="/signin" >Sign in</a>
             </Button>
             <Button variant="link" asChild>
               <a href="/signup">Sign up</a>

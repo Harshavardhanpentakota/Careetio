@@ -8,6 +8,8 @@ import Profile from './Pages/Profile';
 import SigninPage from './auth/Signin';
 import SignUpPage from './auth/Signup';
 import { BorderBeam } from "@/components/magicui/border-beam";
+import GenerateWithAi from './Pages/GenerateWithAi';
+import { Toaster } from './components/ui/sonner';
 
 function App() {
   return (
@@ -23,8 +25,10 @@ function App() {
         <Route path='/profile' element={<Profile/>} />
         <Route path='/signin' element = {<SigninPage />} />
         <Route path='/signup' element = {<SignUpPage />} />
+        <Route path='/generate-ai' element={<GenerateWithAi/>} />
       </Routes>
     </Router>
+    <Toaster/>
     </div>
     </div>
     </ThemeProvider>
