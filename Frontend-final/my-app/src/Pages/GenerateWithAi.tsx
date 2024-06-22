@@ -5,9 +5,7 @@ import WordFadeIn from '@/components/magicui/word-fade-in'
 import { useTheme } from '@/components/ui/theme-provider';
 import Particles from '@/components/magicui/particles';
 import { useState,useEffect } from 'react';
-import DialogGen from '@/components/ui/DialogGen';
 import axios from 'axios';
-import { useAuth } from '@clerk/clerk-react';
 import {
   Dialog,
   DialogContent,
@@ -16,12 +14,23 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import ReactMarkdown from "react-markdown";
+import { AxiosError } from 'axios';
+
+
 const GenerateWithAi = () => {
+
+  const isAxiosError = (error: unknown): error is AxiosError => {
+    return (error as AxiosError).isAxiosError !== undefined;
+  };
+  interface ErrorResponse {
+    message: string;
+  }
+
   const {theme} =useTheme();
   const [search, setSearch] = useState("");
   const [content,setContent]=useState("");
   const [loading,setLoading]=useState(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<ErrorResponse | null>(null);
 
   useEffect(() => {
     const generateContentUsingAI = async () => {
@@ -34,7 +43,11 @@ const GenerateWithAi = () => {
         setContent(response.data.description);
         setLoading(false);
       } catch (err) {
-        setError(err);
+        if (isAxiosError(err)) {
+          setError({ message: err.message });
+        } else {
+          setError({ message: 'An unknown error occurred' });
+        }
         setLoading(false);
       }
     }

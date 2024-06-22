@@ -9,7 +9,6 @@ import { useTheme } from "@/components/ui/theme-provider";
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
@@ -17,10 +16,15 @@ import {
 } from "@/components/ui/table";
 import { useUser } from "@clerk/clerk-react";
 
+interface Course {
+	CourseName: string;
+	completionDate?: string;
+	progress?: string;
+  }
 const Dashboard = () => {
 	const { isSignedIn, userId } = useAuth();
-	const [savedCourses, setSavedCourses] = useState<any[]>();
-	const [completedCourses, setCompletedCourses] = useState<any[]>();
+	const [savedCourses, setSavedCourses] = useState<Course[]>();
+	const [completedCourses, setCompletedCourses] = useState<Course[]>();
 	const { theme } = useTheme();
   const {user} = useUser();
   let name= user?.fullName;
@@ -89,7 +93,7 @@ const Dashboard = () => {
 							</TableHeader>
             <TableBody>
 								{completedCourses &&
-									completedCourses.map((course: any, index: number) => {
+									completedCourses.map((course, index: number) => {
 										return (
 											<TableRow key={index}>
 												<TableCell>{course.CourseName}</TableCell>
@@ -111,7 +115,7 @@ const Dashboard = () => {
 							</TableHeader>
 							<TableBody>
               {savedCourses &&
-									savedCourses.map((course: any, index: number) => {
+									savedCourses.map((course, index: number) => {
 										return (
 											<TableRow key={index}>
 												<TableCell>{course.CourseName}</TableCell>

@@ -5,7 +5,6 @@ import Particles from "@/components/magicui/particles";
 import GradualSpacing from "@/components/magicui/gradual-spacing";
 import { useTheme } from "@/components/ui/theme-provider";
 import TextRevealByWord from "@/components/magicui/text-reveal";
-import { AnimatedBeamMultipleOutputDemo } from "@/components/magicui/animated-beam-multiple";
 import Marquee from "@/components/magicui/marquee";
 import Card from "@/components/ui/Card";
 import { useNavigate } from "react-router-dom";

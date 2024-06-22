@@ -19,7 +19,36 @@ import { useNavigate } from "react-router-dom";
 
 
 const DialogGen = ({courseName}:{courseName:string}) => {
-    const [course, setCourse] = useState([]);
+
+  interface Resource {
+    title: string;
+    url: string;
+  }
+  
+  interface Topic {
+    name: string;
+    description: string;
+    estimated_time: string;
+    resources: Resource[];
+  }
+  
+  interface Section {
+    title: string;
+    description: string;
+    estimated_time: string;
+    topics: Topic[];
+  }
+  
+  interface CourseContent {
+    title: string;
+    sections: Section[];
+  }
+  
+  interface Course {
+    content: CourseContent[];
+  }
+
+    const [course, setCourse] = useState<CourseContent | null>(null);
     const {userId,isSignedIn}=useAuth();
     const [iscompleted, setIsCompleted] = useState(false);
     const navigate=useNavigate();
@@ -156,7 +185,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
     <Button onClick={ async () => {
             try{
                 const res= await axios.get(`https://careetio.onrender.com/api/v1/courses/description/?name=${courseName}`);
-                setCourse(res.data.content);
+                setCourse(res.data.content[0]);
             }
             catch(err){
                 setError(err as never);
@@ -168,7 +197,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
         <DialogContent className="max-w-4xl p-7" >
         <DialogHeader>
           <div className="flex justify-between" >
-          <DialogTitle className="font-montserrat font-bold text-3xl" >{course[0]?.title}</DialogTitle>
+          <DialogTitle className="font-montserrat font-bold text-3xl" >{course.title}</DialogTitle>
       <div>
       <Button onClick={handleMarkAsCompleted} className="mr-7">
        {
@@ -183,8 +212,8 @@ const DialogGen = ({courseName}:{courseName:string}) => {
       </div>
           </div>
           <DialogDescription className="max-h-[70vh] overflow-y-auto p-4 " >
-            { course[0]?.sections &&
-                course[0]?.sections.map((section:any, index:number) => {
+            {  course && course.sections &&
+                course.sections.map((section, index:number) => {
                     return (
                         <div key={index} className="mb-8" >
                             <p className="pb-2" ><span className="font-bold font-montserrat text-2xl ">{section.title}</span></p>
@@ -192,7 +221,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
                             <p className="pb-2" ><span className="font-bold">Estimated time: </span> <span>{section.estimated_time}</span></p>
                             <div  >
                             { section.topics &&
-                                section.topics.map((topic:any, index:number) => {
+                                section.topics.map((topic, index:number) => {
                                     return (
                                         <div key={index} className="pb-2" >
                                             <p><span className="font-bold font-montserrat text-lg ">{topic.name}:</span></p>
@@ -201,7 +230,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
                                             <p className="font-bold" >Resources:</p>
                                             <ul className="list-disc ml-6" >
                                             {  topic.resources &&
-                                                topic.resources.map((resourse:any, index:number)=> {
+                                                topic.resources.map((resourse, index:number)=> {
                                                     return (
                                                        <li key={index} > <a key={index} href={resourse.url}>{resourse.title}</a></li>
                                                     )
