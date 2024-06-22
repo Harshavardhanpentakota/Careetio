@@ -29,7 +29,7 @@ const Dashboard = () => {
 	useEffect(() => {
 		const fetchSavedCourses = async () => {
 			const response = await axios.get(
-				`http://localhost:3000/api/v1/account/savedCourses?userId=${userId}`
+				`https://careetio.onrender.com/api/v1/account/savedCourses?userId=${userId}`
 			);
 			setSavedCourses(response.data.courses);
 		};
@@ -41,7 +41,7 @@ const Dashboard = () => {
 	useEffect(() => {
 		const fetchCompletedCourses = async () => {
 			const response = await axios.get(
-				`http://localhost:3000/api/v1/account/completedCourses?userId=${userId}`
+				`https://careetio.onrender.com/api/v1/account/completedCourses?userId=${userId}`
 			);
 			setCompletedCourses(response.data.courses);
 		};

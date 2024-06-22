@@ -30,7 +30,7 @@ const GenerateWithAi = () => {
       }
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/api/v1/courses/description/generate?search=${search}`);
+        const response = await axios.get(`https://careetio.onrender.com/api/v1/courses/description/generate?search=${search}`);
         setContent(response.data.description);
         setLoading(false);
       } catch (err) {

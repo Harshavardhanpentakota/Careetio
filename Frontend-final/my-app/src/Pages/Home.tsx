@@ -20,7 +20,7 @@ const Home = () => {
   useEffect(() => {
     const fetchCourses = async () => {
         try{
-            const res= await axios.get(`http://localhost:3000/api/v1/courses`);
+            const res= await axios.get(`https://careetio.onrender.com/api/v1/courses`);
             setCourses(res.data.courses);
         }
         catch(err){

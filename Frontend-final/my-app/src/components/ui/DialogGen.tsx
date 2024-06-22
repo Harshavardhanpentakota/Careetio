@@ -31,7 +31,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
     useEffect(() => {
       const CompletionStatusFetcher = async (userId:string,CourseName:string) => {
         try{
-            const res= await axios.get(`http://localhost:3000/api/v1/account/completion/?userId=${userId}&courseName=${CourseName}`);
+            const res= await axios.get(`https://careetio.onrender.com/api/v1/account/completion/?userId=${userId}&courseName=${CourseName}`);
             return res.data;
         }
         catch(err){
@@ -50,7 +50,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
     useEffect(() => {
       const BookmarkStatusFetcher = async (userId:string,CourseName:string) => {
         try{
-            const res= await axios.get(`http://localhost:3000/api/v1/account/bookmark/?userId=${userId}&courseName=${CourseName}`);
+            const res= await axios.get(`https://careetio.onrender.com/api/v1/account/bookmark/?userId=${userId}&courseName=${CourseName}`);
             return res.data;
         }
         catch(err){
@@ -87,7 +87,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
         </div>
       );
       try{
-        await axios.post(`http://localhost:3000/api/v1/account/bookmark/?userId=${userId}`,{courseName,newIsBookmarked});
+        await axios.post(`https://careetio.onrender.com/api/v1/account/bookmark/?userId=${userId}`,{courseName,newIsBookmarked});
       }
       catch(err){
         setError(err as never);
@@ -99,7 +99,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
     setIsBookmarked(newIsBookmarked);
       toast.dismiss();
       try{
-        await axios.post(`http://localhost:3000/api/v1/account/bookmark/?userId=${userId}`,{courseName,newIsBookmarked});
+        await axios.post(`https://careetio.onrender.com/api/v1/account/bookmark/?userId=${userId}`,{courseName,newIsBookmarked});
       }
       catch(err){
         setError(err as never);
@@ -127,7 +127,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
         </div>
       );
       try{
-        await axios.post(`http://localhost:3000/api/v1/account/completion/?userId=${userId}`,{courseName,newIsCompleted});
+        await axios.post(`https://careetio.onrender.com/api/v1/account/completion/?userId=${userId}`,{courseName,newIsCompleted});
       }
       catch(err){
         setError(err as never);
@@ -139,7 +139,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
     setIsCompleted(newIsCompleted);
       toast.dismiss();
       try{
-        await axios.post(`http://localhost:3000/api/v1/account/completion/?userId=${userId}`,{courseName,newIsCompleted});
+        await axios.post(`https://careetio.onrender.com/api/v1/account/completion/?userId=${userId}`,{courseName,newIsCompleted});
       }
       catch(err){
         setError(err as never);
@@ -155,7 +155,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
   <DialogTrigger asChild>
     <Button onClick={ async () => {
             try{
-                const res= await axios.get(`http://localhost:3000/api/v1/courses/description/?name=${courseName}`);
+                const res= await axios.get(`https://careetio.onrender.com/api/v1/courses/description/?name=${courseName}`);
                 setCourse(res.data.content);
             }
             catch(err){
