@@ -5,13 +5,13 @@ import SparklesText from '../magicui/sparkles-text'
 import { useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { useNavigate } from "react-router-dom";
-const SearchBar = ({genAi, setSearch}:{genAi:boolean,setSearch:any}) => {  
+const SearchBar = ({genAi, setSearch}:{genAi:boolean,setSearch:React.Dispatch<React.SetStateAction<string>>;}) => {  
   const [content, setContent] = useState("") ;
   const {isSignedIn} = useAuth();
   const navigate = useNavigate();
 
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isSignedIn) {
       navigate("/signup");
