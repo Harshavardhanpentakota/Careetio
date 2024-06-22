@@ -10,6 +10,7 @@ import Marquee from "@/components/magicui/marquee";
 import Card from "@/components/ui/Card";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
+import Footer from "@/components/Footer";
 function LandingPage() {
   const { theme } = useTheme();
   const {isSignedIn}=useUser();
@@ -137,10 +138,10 @@ function LandingPage() {
       </div>
       <TextRevealByWord text="Algorithms to Art:        Embracing New Horizons" />
       <div className="flex justify-center mx-auto items-center w-full  ">
-        <AnimatedBeamMultipleOutputDemo />
       </div>
       <div>
       </div>
+      <Footer/>
     </>
   );
 }

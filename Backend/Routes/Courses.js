@@ -20,6 +20,7 @@ courseRouter.get("/",async (req,res) => {
     }
 })
 
+
 courseRouter.get("/description",async(req,res) => {
     try{
         const courseName=req.query.name;
@@ -38,16 +39,20 @@ courseRouter.get("/description",async(req,res) => {
 
 courseRouter.get("/description/generate",async (req,res) => {
     try{
-        const course=req.query.course_name;
+        const course=req.query.search;
+        if(!course){
+            return res.status(400).json({ success: false, msg: "Please provide a course name" });
+        }
         const description=await generateResult(course);
         res.json({
+            success:true,
             description:description
         });
     }
     catch{
         res.status(504).json({
             success:false,
-            msg:"Courses cannot be fetched at the moment, please try again after a while!"
+            msg:"Courses cannot be generated at the moment, please try again after a while!"
         })
     }
 })

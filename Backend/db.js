@@ -43,12 +43,20 @@ const accountSchema = new mongoose.Schema({
         progress: {
             type: Boolean,
             default: false
+        },
+        completionDate: {
+            type:Date,
+            default:null
         }
     }],
     bookmarkedCourse:[{
         CourseName: {
             type: String,
             unique:true
+        },
+        progress: {
+            type: Boolean,
+            default: false
         },
     }],
 

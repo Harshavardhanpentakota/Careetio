@@ -7,12 +7,16 @@ import axios from 'axios';
 import { useTheme } from '@/components/ui/theme-provider';
 import Particles from '@/components/magicui/particles';
 import DialogGen from '@/components/ui/DialogGen';
+import { Button } from '@/components/ui/button';
+import SparklesText from '@/components/magicui/sparkles-text';
+import Footer from '@/components/Footer';
 const Home = () => {
   const {theme}=useTheme();
   const [courses,setCourses]=useState([]);
   const [loading,setLoading]=useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [error,setError]=useState<any>(null);
+  const [search,setSearch]=useState("");
   useEffect(() => {
     const fetchCourses = async () => {
         try{
@@ -61,35 +65,42 @@ if(error){
       <Navbar genAi={false} />
      <div className='flex flex-col items-center justify-center mt-20 mx-auto' >
       <WordFadeIn words='Never Stop Learning.' className='text-7xl font-bold font-montserrat' delay={0.5} />
-      <SearchBar genAi={false} />
+      <SearchBar setSearch={setSearch} genAi={false} />
+      <div className='flex flex-row relative'>
+      <p className='pt-2 font-semibold text-sm font-montserrat' >Unable to find the course?</p>
+      <Button variant="outline" className='shadow-md mx-2' >
+            <a href="/generate-ai">
+            <SparklesText className='text-md' sparklesCount={4} text='Generate with AI' />
+            </a>
+      </Button>
+      </div>
       </div>
       <div className='relative flex flex-col items-center mt-20'>
-        <p className='text-4xl font-bold font-montserrat' >Suggested Courses</p>
-        <div className='grid grid-cols-5 gap-4 my-10 ' >
         {
-          theme ==='light' ? 
-            (
-              <>
-              {
-              courses.map((course: {name:string},index) => {
-                return  <DialogGen key={index} courseName={course.name} />
-              })
-            }
-              </>
-            ):(
-              <>
-              {
-                courses.map((course: {name:string} ,index) => {
-                  return (
-                    <DialogGen key={index} courseName={course.name} />
-                )})
-              }
-              </>
-            )
-          
+          !search && (
+            <p className='text-4xl font-bold font-montserrat' >Suggested Courses</p>
+          )
         }
+        <div className='grid grid-cols-5 gap-4 my-10 ' >
+          {
+            search ? (
+              <div>
+                 <DialogGen courseName={search} />
+              </div>
+            ):
+                (
+                  <>
+                  {
+                courses.map((course: {name:string},index) => {
+                  return  <DialogGen key={index} courseName={course.name} />
+                })
+              }
+                  </>
+                )
+          }
         </div>
       </div>
+      <Footer/>
     </div>
   )
 }

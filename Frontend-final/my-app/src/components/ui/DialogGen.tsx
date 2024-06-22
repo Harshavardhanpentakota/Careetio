@@ -23,6 +23,7 @@ const DialogGen = ({courseName}:{courseName:string}) => {
     const {userId,isSignedIn}=useAuth();
     const [iscompleted, setIsCompleted] = useState(false);
     const navigate=useNavigate();
+    const [isBookmarked,setIsBookmarked] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [error, setError] = useState<any>(null);
       
@@ -31,11 +32,10 @@ const DialogGen = ({courseName}:{courseName:string}) => {
       const CompletionStatusFetcher = async (userId:string,CourseName:string) => {
         try{
             const res= await axios.get(`http://localhost:3000/api/v1/account/completion/?userId=${userId}&courseName=${CourseName}`);
-            // console.log(res.data.progress) //false
             return res.data;
         }
         catch(err){
-            console.log(err);
+           setError(err);
         }
     }
       if (isSignedIn && userId) {
@@ -47,8 +47,68 @@ const DialogGen = ({courseName}:{courseName:string}) => {
       }
     
     }, [isSignedIn, userId]);
+
+    useEffect(() => {
+      const BookmarkStatusFetcher = async (userId:string,CourseName:string) => {
+        try{
+            const res= await axios.get(`http://localhost:3000/api/v1/account/bookmark/?userId=${userId}&courseName=${CourseName}`);
+            return res.data;
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+      if (isSignedIn && userId) {
+        BookmarkStatusFetcher(userId, courseName).then((result) => {
+          const newResult = result.saved;
+          setIsBookmarked(newResult);
+          console.log(newResult);
+        })
+      }
     
+    }, [isSignedIn, userId]);
     
+    const handleBookmark = async () => {
+      if (!isSignedIn) {
+        navigate('/signup');
+        return;
+      }
+      const newIsBookmarked = !isBookmarked; //true
+     setIsBookmarked(newIsBookmarked);
+      toast(
+        <div className="flex justify-between items-center">
+          <p className="font-semibold font-montserrat" >
+          <span>Course </span><span>{isBookmarked ? "saved" : "unsaved"}</span>
+          </p>
+          <Button
+            onClick={handleUndoBookmark}  
+            className="mx-4"
+          >
+            unsave
+          </Button>
+        </div>
+      );
+      try{
+        console.log(isBookmarked);
+        console.log("Before req") //false
+        await axios.post(`http://localhost:3000/api/v1/account/bookmark/?userId=${userId}`,{courseName,newIsBookmarked});
+      }
+      catch(err){
+        setError(err as never);
+      }
+    }
+
+    const handleUndoBookmark = async () => {
+      const newIsBookmarked = !isBookmarked;
+    setIsBookmarked(newIsBookmarked);
+      toast.dismiss();
+      try{
+        await axios.post(`http://localhost:3000/api/v1/account/bookmark/?userId=${userId}`,{courseName,newIsBookmarked});
+      }
+      catch(err){
+        setError(err as never);
+      }
+    };
 
     const handleMarkAsCompleted = async () => {
       if (!isSignedIn) {
@@ -59,13 +119,15 @@ const DialogGen = ({courseName}:{courseName:string}) => {
      setIsCompleted(newIsCompleted);
       toast(
         <div className="flex justify-between items-center">
-          <span>Task marked as </span><span>{iscompleted ? "incomplete" : "complete"}</span>
-          <button
-            onClick={handleUndo}
-            className="ml-4 bg-red-500 text-white px-2 py-1 rounded"
+          <p className="font-semibold font-montserrat" >
+          <span>Task marked as </span><span>{iscompleted ? " incomplete" : "complete"}</span>
+          </p>
+          <Button
+            onClick={handleUndo}  
+            className="mx-4"
           >
             Undo
-          </button>
+          </Button>
         </div>
       );
       try{
@@ -110,17 +172,24 @@ const DialogGen = ({courseName}:{courseName:string}) => {
   </DialogTrigger>
   {
     course ?(
-        <DialogContent className="max-w-4xl" >
+        <DialogContent className="max-w-4xl p-7" >
         <DialogHeader>
-          <div>
+          <div className="flex justify-between" >
           <DialogTitle className="font-montserrat font-bold text-3xl" >{course[0]?.title}</DialogTitle>
-      <Button onClick={handleMarkAsCompleted} className="bg-blue-500 text-white px-4 py-2 rounded">
+      <div>
+      <Button onClick={handleMarkAsCompleted} className="mr-7">
        {
          iscompleted ? "Mark as incomplete" : "Mark as completed"
        }
       </Button>
+      <Button onClick={handleBookmark} className="mr-7">
+       {
+         isBookmarked ? "unsave" : "save"
+       }
+      </Button>
+      </div>
           </div>
-          <DialogDescription className="max-h-[70vh] overflow-y-auto p-4" >
+          <DialogDescription className="max-h-[70vh] overflow-y-auto p-4 " >
             { course[0]?.sections &&
                 course[0]?.sections.map((section:any, index:number) => {
                     return (

@@ -7,16 +7,14 @@ import Home from './Pages/Home';
 import Profile from './Pages/Profile';
 import SigninPage from './auth/Signin';
 import SignUpPage from './auth/Signup';
-import { BorderBeam } from "@/components/magicui/border-beam";
 import GenerateWithAi from './Pages/GenerateWithAi';
 import { Toaster } from './components/ui/sonner';
+import Dashboard from './Pages/Dashboard';
 
 function App() {
   return (
     <>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-    <div className="relative rounded-xl">
-      <BorderBeam borderWidth={2.5} />
     <div>
     <Router>
       <Routes>
@@ -26,10 +24,10 @@ function App() {
         <Route path='/signin' element = {<SigninPage />} />
         <Route path='/signup' element = {<SignUpPage />} />
         <Route path='/generate-ai' element={<GenerateWithAi/>} />
+        <Route path='/dashboard' element={<Dashboard/>} />
       </Routes>
     </Router>
     <Toaster/>
-    </div>
     </div>
     </ThemeProvider>
   </>

@@ -22,7 +22,7 @@ const Navbar = ({genAi}:{genAi:boolean}) => {
     <div className="border-b relative py-3">
       <div className="h-14 container flex justify-between items-center">
         <div className="flex gap-6 items-center">
-          <p className="text-3xl font-bold font-montserrat">Careetio</p>
+          <a href="/home"><p className="text-3xl font-bold font-montserrat">Careetio</p></a>
          {
           !genAi ? (
             <Button variant="outline" className='shadow-md' >
@@ -47,6 +47,9 @@ const Navbar = ({genAi}:{genAi:boolean}) => {
             </Button>
           ) : (
             <>
+              <Button variant="link" >
+                <a href="/dashboard" className='font-montserrat font-semibold' >Dashboard</a>
+              </Button>
               <ClerkLoading>
                 <UserProfileSkeleton />
               </ClerkLoading>
@@ -59,7 +62,7 @@ const Navbar = ({genAi}:{genAi:boolean}) => {
                           userButtonAvatarBox: "h-8 w-8",
                         },
                       }}
-                      afterSignOutUrl="/sign-in"
+                      afterSignOutUrl="/signin"
                     />
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -72,7 +75,7 @@ const Navbar = ({genAi}:{genAi:boolean}) => {
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction
-                        onClick={() => ({ redirectUrl: '/sign-in' })}
+                        onClick={() => ({ redirectUrl: '/signin' })}
                       >
                         Sign Out
                       </AlertDialogAction>
