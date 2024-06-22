@@ -54,7 +54,6 @@ accountRouter.get("/completion",async (req,res) => {
         }
     }
     catch(err){
-        console.log(err);
         res.status(504).json({
             success: false,
             msg: "Account cannot be fetched at the moment, please try again after a while!",
@@ -81,7 +80,6 @@ accountRouter.get("/bookmark",async (req,res) => {
         }
     }
     catch(err){
-        console.log(err);
         res.status(504).json({
             success: false,
             msg: "Account cannot be fetched at the moment, please try again after a while!",
@@ -96,9 +94,7 @@ accountRouter.post("/completion",async (req,res) => {
         const CourseName=req.body.courseName;
         const completion=req.body.newIsCompleted;
         const currentDate = getDateOnly(new Date());
-        console.log(5)
         const account= await Account.findOne({userId:userId});
-        console.log(4)
         if (!account) {
             return res.status(404).json({
                 success: false,
@@ -106,11 +102,8 @@ accountRouter.post("/completion",async (req,res) => {
             });
         }
         const searchCourse =account.enrolledCourses.find((course)=>course.CourseName===CourseName);
-        console.log(3);
-        console.log(searchCourse);
         if (searchCourse) {
             if (completion === false) {
-                console.log("Unenrolling course");
                 await Account.updateOne(
                     { userId: userId },
                     { $pull: { enrolledCourses: { CourseName: CourseName } } }
@@ -123,7 +116,6 @@ accountRouter.post("/completion",async (req,res) => {
                     )
                 }
             } else {
-                console.log("Course is already enrolled and marked as completed");
                 await Account.updateOne(
                     { userId: userId, "enrolledCourses.CourseName": CourseName },
                     { $set: { "enrolledCourses.$.progress": true, "enrolledCourses.$.completionDate": currentDate } }
@@ -137,7 +129,6 @@ accountRouter.post("/completion",async (req,res) => {
                 }
             }
         } else if (completion === true) {
-            console.log("Enrolling course");
             await Account.updateOne(
                 { userId: userId },
                 { $push: { enrolledCourses: { CourseName: CourseName, progress: true, completionDate: currentDate  } } }
@@ -155,7 +146,6 @@ accountRouter.post("/completion",async (req,res) => {
         })
     }
     catch(err){
-        console.log(err);
         res.status(504).json({
             success: false,
             msg: "Course cannot be marked at the moment, please try again after a while!",
@@ -169,9 +159,7 @@ accountRouter.post("/bookmark",async (req,res) => {
         const userId=req.query.userId;
         const CourseName=req.body.courseName;
         const bookmark=req.body.newIsBookmarked;
-        console.log(5)
         const account= await Account.findOne({userId:userId});
-        console.log(4)
         if (!account) {
             return res.status(404).json({
                 success: false,
@@ -179,18 +167,14 @@ accountRouter.post("/bookmark",async (req,res) => {
             });
         }
         const searchCourse =account.bookmarkedCourse.find((course)=>course.CourseName===CourseName);
-        console.log(3);
-        console.log(searchCourse);
         if (searchCourse) {
             if (bookmark === false) {
-                console.log("UnSaving course");
                 await Account.updateOne(
                     { userId: userId },
                     { $pull: { bookmarkedCourse: { CourseName: CourseName } } }
                 );
             } 
         } else if (bookmark === true) {
-            console.log("Saving course");
             await Account.updateOne(
                 { userId: userId },
                 { $push: { bookmarkedCourse: { CourseName: CourseName } } }
@@ -201,7 +185,6 @@ accountRouter.post("/bookmark",async (req,res) => {
         })
     }
     catch(err){
-        console.log(err);
         res.status(504).json({
             success: false,
             msg: "Course cannot be marked at the moment, please try again after a while!",
@@ -225,7 +208,6 @@ accountRouter.get("/savedCourses", async (req, res) => {
         courses: savedCourses,
       });
     } catch (err) {
-      console.log(err);
       res.status(504).json({
         success: false,
         msg: "Courses cannot be fetched at the moment, please try again after a while!",
@@ -249,7 +231,6 @@ accountRouter.get("/completedCourses", async (req, res) => {
         courses: enrolledCourses,
       });
     } catch (err) {
-      console.log(err);
       res.status(504).json({
         success: false,
         msg: "Courses cannot be fetched at the moment, please try again after a while!",

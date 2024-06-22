@@ -42,7 +42,6 @@ const DialogGen = ({courseName}:{courseName:string}) => {
         CompletionStatusFetcher(userId, courseName).then((result) => {
           const newResult = result.progress;
           setIsCompleted(newResult);
-          console.log(newResult);
         })
       }
     
@@ -55,14 +54,13 @@ const DialogGen = ({courseName}:{courseName:string}) => {
             return res.data;
         }
         catch(err){
-            console.log(err);
+          setError(err);
         }
     }
       if (isSignedIn && userId) {
         BookmarkStatusFetcher(userId, courseName).then((result) => {
           const newResult = result.saved;
           setIsBookmarked(newResult);
-          console.log(newResult);
         })
       }
     
@@ -89,8 +87,6 @@ const DialogGen = ({courseName}:{courseName:string}) => {
         </div>
       );
       try{
-        console.log(isBookmarked);
-        console.log("Before req") //false
         await axios.post(`http://localhost:3000/api/v1/account/bookmark/?userId=${userId}`,{courseName,newIsBookmarked});
       }
       catch(err){
@@ -131,8 +127,6 @@ const DialogGen = ({courseName}:{courseName:string}) => {
         </div>
       );
       try{
-        console.log(iscompleted);
-        console.log("Before req") //false
         await axios.post(`http://localhost:3000/api/v1/account/completion/?userId=${userId}`,{courseName,newIsCompleted});
       }
       catch(err){
@@ -163,7 +157,6 @@ const DialogGen = ({courseName}:{courseName:string}) => {
             try{
                 const res= await axios.get(`http://localhost:3000/api/v1/courses/description/?name=${courseName}`);
                 setCourse(res.data.content);
-                console.log(res.data);
             }
             catch(err){
                 setError(err as never);

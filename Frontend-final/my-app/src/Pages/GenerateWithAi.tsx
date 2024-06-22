@@ -26,12 +26,11 @@ const GenerateWithAi = () => {
   useEffect(() => {
     const generateContentUsingAI = async () => {
       if (search.trim() === "") {
-        return; // Do not make the request if search is empty
+        return; 
       }
       setLoading(true);
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/courses/description/generate?search=${search}`);
-        console.log(response.data.description);
         setContent(response.data.description);
         setLoading(false);
       } catch (err) {
@@ -43,7 +42,7 @@ const GenerateWithAi = () => {
   }, [search])
   
   if(error){
-    console.log(error);
+    throw error;
   }
 
   if(loading){
