@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
-const {DB_URL} = require("./config");
-const { string } = require("zod");
-
-mongoose.connect(DB_URL);
+require('dotenv').config(); 
+mongoose.connect(process.env.DB_URL);
 console.log("Connection Successfull")
 
 const userSchema = new mongoose.Schema({

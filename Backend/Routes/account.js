@@ -1,7 +1,7 @@
 const express = require("express");
 const accountRouter=express.Router();
 const { Account } = require("../db");
-const { CLERK_SECRET_KEY } = require("../config");
+require('dotenv').config(); 
 const bodyParser = require('body-parser');
 const Webhook = require('svix');
 
@@ -14,7 +14,7 @@ async function (req,res) {
     try {
         const payloadString = req.body.toString();
         const svixHeaders = req.headers;
-        const wh = new Webhook(CLERK_SECRET_KEY);
+        const wh = new Webhook(process.env.CLERK_SECRET_KEY);
         const evt = wh.verify(payloadString,svixHeaders);
         const {id, ...attributes} = evt.data;
         const eventType = evt.type;
