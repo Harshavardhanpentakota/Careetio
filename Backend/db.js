@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 require('dotenv').config(); 
 mongoose.connect(process.env.DB_URL);
-console.log("Connection Successfull")
 
 const userSchema = new mongoose.Schema({
     email:{

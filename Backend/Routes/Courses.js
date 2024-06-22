@@ -3,7 +3,6 @@ const courseRouter= express.Router();
 const { Courses } = require("../db");
 const { CourseContent } = require("../db");
 const { generateResult } = require("../GenAi/playground");
-console.log("Third")
 
 courseRouter.get("/",async (req,res) => {
     try{

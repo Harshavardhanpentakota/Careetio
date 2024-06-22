@@ -15,17 +15,35 @@ import { toast } from "sonner";
 import { useAuth } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 
+interface Resource {
+  title: string;
+  url: string;
+}
 
+interface Topic {
+  name: string;
+  description: string;
+  resources: Resource[];
+}
 
+interface Section {
+  title: string;
+  topics: Topic[];
+}
 
-const DialogGen = ({courseName}:{courseName:string}) => {
-    const [course, setCourse] = useState([]);
-    const {userId,isSignedIn}=useAuth();
-    const [iscompleted, setIsCompleted] = useState(false);
-    const navigate=useNavigate();
-    const [isBookmarked,setIsBookmarked] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [error, setError] = useState<any>(null);
+interface CourseContent {
+  _id: string;
+  title: string;
+  sections: Section[];
+}
+
+const DialogGen = ({ courseName }: { courseName: string }) => {
+  const [course, setCourse] = useState<CourseContent | null>(null);
+  const { userId, isSignedIn } = useAuth();
+  const [iscompleted, setIsCompleted] = useState(false);
+  const navigate = useNavigate();
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [error, setError] = useState<any>(null);
       
 
     useEffect(() => {
@@ -183,8 +201,8 @@ const DialogGen = ({courseName}:{courseName:string}) => {
       </div>
           </div>
           <DialogDescription className="max-h-[70vh] overflow-y-auto p-4 " >
-            { course[0]?.sections &&
-                course[0]?.sections.map((section:any, index:number) => {
+            { course?.sections &&
+                course?.sections.map((section:any, index:number) => {
                     return (
                         <div key={index} className="mb-8" >
                             <p className="pb-2" ><span className="font-bold font-montserrat text-2xl ">{section.title}</span></p>
