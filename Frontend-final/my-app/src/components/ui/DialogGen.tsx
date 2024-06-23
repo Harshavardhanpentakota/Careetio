@@ -40,10 +40,6 @@ const DialogGen = ({ courseName }: { courseName: string }) => {
 		sections: Section[];
 	}
 
-	interface Course {
-		content: CourseContent[];
-	}
-
 	const [course, setCourse] = useState<CourseContent | null>(null);
 	const { userId, isSignedIn } = useAuth();
 	const [iscompleted, setIsCompleted] = useState(false);

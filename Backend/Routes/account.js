@@ -12,6 +12,7 @@ function getDateOnly(date) {
 accountRouter.post("/",bodyParser.raw({type: 'application/json'})),
 async function (req,res) {
     try {
+        console.log('WebHook Received try');
         const payloadString = req.body.toString();
         const svixHeaders = req.headers;
         const wh = new Webhook(process.env.CLERK_SECRET_KEY);
@@ -30,6 +31,7 @@ async function (req,res) {
         });
     }
     catch(err){
+        console.log("Webhook received catch")
         res.status(400).json({
             success:false,
             message:err.message
