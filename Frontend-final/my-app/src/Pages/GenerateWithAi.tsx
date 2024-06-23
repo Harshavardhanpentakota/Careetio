@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import ReactMarkdown from "react-markdown";
 import { AxiosError } from 'axios';
+import Footer from '@/components/Footer';
 
 
 const GenerateWithAi = () => {
@@ -73,7 +74,7 @@ const GenerateWithAi = () => {
   }
 
   return (
-    <div>
+    <div className='flex flex-col items-center justify-center min-h-screen' >
       {theme === "dark" ? (
         <Particles className="fixed h-full w-full" quantity={200} />
       ) : (
@@ -83,8 +84,10 @@ const GenerateWithAi = () => {
           color="#000000"
         />
       )}
+      <div className='w-full' >
       <Navbar genAi={true} />
-     <div className='flex flex-col items-center justify-center mt-20 mx-auto px-30 ' >
+      </div>
+     <div className='flex flex-col items-center justify-center flex-grow mx-auto px-30 ' >
       <WordFadeIn words='AI-Powered Career Pathways Tailored Just for You.' className='text-5xl font-bold font-montserrat' delay={0.5} />
       <SearchBar genAi={true} setSearch={setSearch} />
       </div>
@@ -121,7 +124,11 @@ const GenerateWithAi = () => {
       </Dialog>
       )
      }
+     <div className='bottom-0 fixed w-full' >
+     <Footer/>
+     </div>
     </div>
+
   )
 }
 
