@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const Webhook = require('svix');
 
 function getDateOnly(date) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());   
 }
 
 accountRouter.post("/",bodyParser.raw({type: 'application/json'})),
@@ -241,5 +241,13 @@ accountRouter.get("/completedCourses", async (req, res) => {
       });
     }
 });
+
+accountRouter.post("/test", async (req, res) =>{
+    console.log("request received");
+    res.json({
+        success:true
+    })
+})
+
 
 module.exports={accountRouter}
