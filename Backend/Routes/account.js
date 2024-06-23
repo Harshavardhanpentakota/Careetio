@@ -18,6 +18,7 @@ async function (req,res) {
         const evt = wh.verify(payloadString,svixHeaders);
         const {id, ...attributes} = evt.data;
         const eventType = evt.type;
+        console.log('Webhook verified:', evt);
         if(eventType === 'user.created'){
             const firstName=attributes.first_name;
             const account = new Account({userId:id,firstName:firstName});
