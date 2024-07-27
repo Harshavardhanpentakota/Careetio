@@ -59,7 +59,7 @@ const DialogGen = ({ courseName }: { courseName: string }) => {
 		) => {
 			try {
 				const res = await axios.get(
-					`https://careetio.onrender.com/api/v1/account/completion/?userId=${userId}&courseName=${CourseName}`
+					`https://careetio.onrender.com/api/v1/account/completion?userId=${userId}&courseName=${CourseName}`
 				);
 				return res.data;
 			} catch (err) {
@@ -81,7 +81,7 @@ const DialogGen = ({ courseName }: { courseName: string }) => {
 		) => {
 			try {
 				const res = await axios.get(
-					`https://careetio.onrender.com/api/v1/account/bookmark/?userId=${userId}&courseName=${CourseName}`
+					`https://careetio.onrender.com/api/v1/account/bookmark?userId=${userId}&courseName=${CourseName}`
 				);
 				return res.data;
 			} catch (err) {
@@ -116,7 +116,7 @@ const DialogGen = ({ courseName }: { courseName: string }) => {
 		);
 		try {
 			await axios.post(
-				`https://careetio.onrender.com/api/v1/account/bookmark/?userId=${userId}`,
+				`https://careetio.onrender.com/api/v1/account/bookmark?userId=${userId}`,
 				{ courseName, newIsBookmarked }
 			);
 		} catch (err) {
@@ -130,7 +130,7 @@ const DialogGen = ({ courseName }: { courseName: string }) => {
 		toast.dismiss();
 		try {
 			await axios.post(
-				`https://careetio.onrender.com/api/v1/account/bookmark/?userId=${userId}`,
+				`https://careetio.onrender.com/api/v1/account/bookmark?userId=${userId}`,
 				{ courseName, newIsBookmarked }
 			);
 		} catch (err) {
