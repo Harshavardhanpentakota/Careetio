@@ -9,7 +9,7 @@ function getDateOnly(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());   
 }
 
-accountRouter.post("/",bodyParser.raw({type: 'application/json'}),
+accountRouter.post("/",bodyParser.raw({type: 'application/json'})),
 async function (req,res) {
     try {
         console.log('WebHook Received try');
@@ -38,7 +38,7 @@ async function (req,res) {
             message:err.message
         })
     }
-})
+}
 
 accountRouter.get("/completion",async (req,res) => {
     try{
