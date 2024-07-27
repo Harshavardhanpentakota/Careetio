@@ -3,7 +3,7 @@ const accountRouter=express.Router();
 const { Account } = require("../db");
 require('dotenv').config(); 
 const bodyParser = require('body-parser');
-const Webhook = require('@clerk/clerk-sdk-node');
+const {Webhook} = require('svix');
 
 function getDateOnly(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());   
@@ -15,13 +15,12 @@ async function (req,res) {
         console.log('WebHook Received try');
         const payloadString = req.body.toString();
         const svixHeaders = req.headers;
-        console.log("Hello");
-        const wh = Webhook.verifyWebhookSignature(req.body,req.headers['clerk-signature'],process.env.CLERK_SECRET_KEY);
+        const wh = new Webhook(process.env.CLERK_SECRET_KEY);
         console.log(wh);
-        // const evt = wh.verify(payloadString,svixHeaders);
-        const {id, ...attributes} = wh.data;
+        const evt = wh.verify(payloadString,svixHeaders);
+        const {id, ...attributes} = evt.data;
         const eventType = evt.type;
-        console.log('Webhook verified:', wh);
+        console.log('Webhook verified:', evt);
         if(eventType === 'user.created'){
             const firstName=attributes.first_name;
             const account = new Account({userId:id,firstName:firstName});
@@ -34,7 +33,6 @@ async function (req,res) {
     }
     catch(err){
         console.log("Webhook received catch")
-        console.log(err);
         res.status(400).json({
             success:false,
             message:err.message
@@ -254,3 +252,49 @@ accountRouter.post("/test", async (req, res) =>{
 
 
 module.exports={accountRouter}
+
+
+
+// const express = require("express");
+// const accountRouter=express.Router();
+// const { Account } = require("../db");
+// require('dotenv').config(); 
+// const bodyParser = require('body-parser');
+// const Webhook = require('@clerk/clerk-sdk-node');
+
+// function getDateOnly(date) {
+//     return new Date(date.getFullYear(), date.getMonth(), date.getDate());   
+// }
+
+// accountRouter.post("/",bodyParser.raw({type: 'application/json'}),
+// async function (req,res) {
+//     try {
+//         console.log('WebHook Received try');
+//         const payloadString = req.body.toString();
+//         const svixHeaders = req.headers;
+//         console.log("Hello");
+//         const wh = Webhook.verifyWebhookSignature(req.body,req.headers['clerk-signature'],process.env.CLERK_SECRET_KEY);
+//         console.log(wh);
+//         // const evt = wh.verify(payloadString,svixHeaders);
+//         const {id, ...attributes} = wh.data;
+//         const eventType = evt.type;
+//         console.log('Webhook verified:', wh);
+//         if(eventType === 'user.created'){
+//             const firstName=attributes.first_name;
+//             const account = new Account({userId:id,firstName:firstName});
+//             await account.save();
+//         }
+//         res.status(200).json({
+//             success:true,
+//             message:'Webhook received'
+//         });
+//     }
+//     catch(err){
+//         console.log("Webhook received catch")
+//         console.log(err);
+//         res.status(400).json({
+//             success:false,
+//             message:err.message
+//         })
+//     }
+// })
