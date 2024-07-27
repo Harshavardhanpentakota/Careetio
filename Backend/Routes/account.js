@@ -30,7 +30,6 @@ async function (req,res) {
   const body = JSON.stringify(payload);
 
   // Create a new Svix instance with your secret.
-  const wh = new Webhook("HelloHiHow");
         const payloadString = req.body.toString();
         const svixHeaders = req.headers;
         const wh = new Webhook(process.env.CLERK_SECRET_KEY);
