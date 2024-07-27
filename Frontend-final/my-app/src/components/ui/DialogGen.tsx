@@ -96,7 +96,9 @@ const DialogGen = ({ courseName }: { courseName: string }) => {
 		}
 	}, [isSignedIn, userId]);
 
-	const handleBookmark = async () => {
+	const handleBookmark = async (e) => {
+		e.stopPropogation();
+		e.preventDefault();
 		if (!isSignedIn) {
 			navigate("/signup");
 			return;
