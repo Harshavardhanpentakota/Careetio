@@ -138,7 +138,9 @@ const DialogGen = ({ courseName }: { courseName: string }) => {
 		}
 	};
 
-	const handleMarkAsCompleted = async () => {
+	const handleMarkAsCompleted = async (e) => {
+		e.stopPropogation();
+		e.preventDefault();
 		if (!isSignedIn) {
 			navigate("/signup");
 			return;
