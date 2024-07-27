@@ -3,7 +3,7 @@ const accountRouter=express.Router();
 const { Account } = require("../db");
 require('dotenv').config(); 
 const bodyParser = require('body-parser');
-const Webhook = require('svix');
+const Webhook = require('@clerk/clerk-sdk-node');
 
 function getDateOnly(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());   
