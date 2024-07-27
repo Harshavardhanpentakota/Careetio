@@ -15,6 +15,7 @@ async function (req,res) {
         console.log('WebHook Received try');
         const payloadString = req.body.toString();
         const svixHeaders = req.headers;
+        console.log("Hello");
         const wh = new Webhook(process.env.CLERK_SECRET_KEY);
         console.log(wh);
         const evt = wh.verify(payloadString,svixHeaders);
@@ -33,6 +34,7 @@ async function (req,res) {
     }
     catch(err){
         console.log("Webhook received catch")
+        console.log(err);
         res.status(400).json({
             success:false,
             message:err.message
