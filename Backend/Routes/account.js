@@ -16,6 +16,7 @@ async function (req,res) {
         const payloadString = req.body.toString();
         const svixHeaders = req.headers;
         const wh = new Webhook(process.env.CLERK_SECRET_KEY);
+        console.log(wh);
         const evt = wh.verify(payloadString,svixHeaders);
         const {id, ...attributes} = evt.data;
         const eventType = evt.type;
