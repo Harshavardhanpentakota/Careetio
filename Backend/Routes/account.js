@@ -16,12 +16,12 @@ async function (req,res) {
         const payloadString = req.body.toString();
         const svixHeaders = req.headers;
         console.log("Hello");
-        const wh = new Webhook(process.env.CLERK_SECRET_KEY);
+        const wh = Webhook.verifyWebhookSignature(req.body,req.headers['clerk-signature'],process.env.CLERK_SECRET_KEY);
         console.log(wh);
-        const evt = wh.verify(payloadString,svixHeaders);
-        const {id, ...attributes} = evt.data;
+        // const evt = wh.verify(payloadString,svixHeaders);
+        const {id, ...attributes} = wh.data;
         const eventType = evt.type;
-        console.log('Webhook verified:', evt);
+        console.log('Webhook verified:', wh);
         if(eventType === 'user.created'){
             const firstName=attributes.first_name;
             const account = new Account({userId:id,firstName:firstName});
